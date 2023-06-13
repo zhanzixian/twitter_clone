@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-// import 'package:twitter_clone/features/auth/view/login_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/features/auth/view/signup_view.dart';
 import 'package:twitter_clone/theme/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef) {
     return MaterialApp(
       title: 'Flutter Demo ',
       theme: AppTheme.theme,
