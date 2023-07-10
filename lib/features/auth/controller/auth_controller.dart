@@ -14,6 +14,19 @@ final authControllerProvider =
       authAPI: ref.watch(authAPIProvider), userAPI: ref.watch(userAPIProvider));
 });
 
+final currentUserDetailsProvider = FutureProvider((ref)  {
+  
+  final userDetails = ref.watch(userDetailsProvider());
+
+  return ;
+});
+
+final userDetailsProvider = FutureProvider.family((ref,String uid) async {
+    final authController = ref.watch(authControllerProvider.notifier);
+
+  return  authController.getUserData(uid)
+});
+
 final currentUserAccountProvider = FutureProvider((ref) {
   final authController = ref.watch(authControllerProvider.notifier);
 
@@ -67,5 +80,12 @@ class AuthController extends StateNotifier<bool> {
     res.fold((l) => showSnackBar(context, l.message), (r) {
       Navigator.push(context, HomeView.route());
     });
+  }
+
+  Future<UserModel> getUserData(String uid) async {
+    final document = await _userAPI.getUserData(uid);
+    final updateUser = UserModel.fromMap(document.data);
+
+    return updateUser;
   }
 }
